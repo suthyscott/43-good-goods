@@ -6,6 +6,9 @@ require('dotenv').config()
 const {PORT} = process.env
 
 const {register, login} = require('./controllers/auth')
+const {sequelize} = require('./util/database')
+const {User} = require('./models/user')
+const {Product} = require("./models/product")
 
 const app = express()
 
@@ -16,4 +19,8 @@ app.post('/api/login', login)
 
 app.get('/api/products', () => console.log('hit products'))
 
-app.listen(PORT, () => console.log(`Take us to warp ${PORT}!`))
+sequelize.sync()
+    .then(() => {
+        app.listen(PORT, () => console.log(`Take us to warp ${PORT}!`))
+    })
+    .catch(() => console.log('not connected to DB'))
