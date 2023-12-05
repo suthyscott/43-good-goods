@@ -5,7 +5,14 @@ require('dotenv').config()
 // dotenv.config()
 const {PORT} = process.env
 
+const {register, login} = require('./controllers/auth')
+
 const app = express()
+
+app.use(express.json())
+
+app.post('/api/register', register)
+app.post('/api/login', login)
 
 app.get('/api/products', () => console.log('hit products'))
 
