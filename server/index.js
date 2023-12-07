@@ -13,6 +13,7 @@ const {Product} = require("./models/product")
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.post('/api/register', register)
 app.post('/api/login', login)

@@ -1,8 +1,36 @@
-import React from 'react'
+import {useState, useContext} from 'react'
+import axios from 'axios'
+import AuthContext from '../store/authContext'
 
 const Auth = () => {
+  const {dispatch} = useContext(AuthContext)
+
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleFormSubmit = e => {
+    e.preventDefault()
+    axios.post(`http://localhost:4545/api/${isRegistering ? 'register' : 'login'}`, {username, password})
+      .then(res => {
+        dispatch({type: 'LOGIN', payload: res.data})
+      })
+      .catch(err => console.log(err))
+  }
+
+  // console.log(isRegistering)
   return (
-    <div>Auth</div>
+    <div>
+      <h1>Welcome to Good Goods!</h1>
+      <h2>Please {isRegistering ? 'register' : 'login'} below </h2>
+      <form onSubmit={e => handleFormSubmit(e)}>
+        <input placeholder='Enter your username' onChange={e => setUsername(e.target.value)}/>
+        <input placeholder='Enter your password' onChange={e => setPassword(e.target.value)}/>
+        <button type='submit'>Submit</button>
+      </form>
+      <p>Need to {isRegistering ? 'login' : 'register'}?</p>
+      <button onClick={() => setIsRegistering(!isRegistering)}>{isRegistering ? 'login' : 'register'}</button>
+    </div>
   )
 }
 
