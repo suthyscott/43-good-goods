@@ -4,7 +4,7 @@ import AuthContext from "../store/authContext"
 
 const Header = () => {
   const {state, dispatch} = useContext(AuthContext)
-  console.log(state)
+
   return (
     <nav>
       <NavLink to='/'>Home</NavLink>
