@@ -11,6 +11,13 @@ const {isAuthenticated} = require('./middleware/isAuthenticated')
 const {sequelize} = require('./util/database')
 const {User} = require('./models/user')
 const {Product} = require("./models/product")
+const {Cart} = require('./models/cart')
+
+User.hasMany(Cart)
+Cart.belongsTo(User)
+
+Product.hasMany(Cart)
+Cart.belongsTo(Product)
 
 const app = express()
 
